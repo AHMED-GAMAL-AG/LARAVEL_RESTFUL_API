@@ -15,7 +15,18 @@ class Lesson extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'user_id',
         'title',
         'body',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class); // select * form users where lesson_id = user_id
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }
