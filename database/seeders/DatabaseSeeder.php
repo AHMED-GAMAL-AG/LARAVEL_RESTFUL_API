@@ -3,6 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Lesson;
+use App\Models\LessonTag;
+use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,5 +23,10 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        $this->call(UserSeeder::class); // user should be first as lessons cant be created before a user
+        $this->call(LessonSeeder::class);
+        $this->call(TagSeeder::class);
+        $this->call(LessonTagSeeder::class);
     }
 }
