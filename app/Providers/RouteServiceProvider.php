@@ -24,6 +24,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        Route::pattern('id', '[0-9]+'); // the uri that has a variable {id} should be only integers else return 404
+
         $this->configureRateLimiting();
 
         $this->routes(function () {

@@ -19,8 +19,8 @@ class Tag extends Model
         'name',
     ];
 
-    public function lesson()
+    public function lessons()
     {
-        return $this->belongsToMany(Lesson::class);
+        return $this->belongsToMany(Lesson::class, 'lesson_tags'); // to make laravel search in lesson_tags instead of Illuminate\Database\QueryException: SQLSTATE[42S02]: Base table or view not found: 1146 Table laravel_api.lesson_tag
     }
 }

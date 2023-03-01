@@ -127,4 +127,44 @@ Route::group(['prefix' => '/v1'], function () {
 
         return 204; // means that the request was successful and the server has fulfilled the request,
     });
+
+
+    // return a user lesson by users id
+    Route::get('users/{id}/lessons', function ($id) {
+        $user = User::find($id)->lessons;
+
+        return $user;
+    });
+
+    // get a lesson tags by lesson id
+    Route::get('lessons/{id}/tags', function ($id) {
+        $lesson = Lesson::find($id)->tags;
+
+        return $lesson;
+    });
+
+    // get the lessons that has this tag by its id
+    Route::get('tags/{id}/lessons', function ($id) {
+        $tag = Tag::find($id)->lessons;
+
+        return $tag;
+    });
 });
+
+// // to make a custom uri for the user
+// Route::domain('{account}.myapp.com')->group(function () {
+//     Route::get('user/{id}', function ($account, $id) {
+//         //
+//     });
+// });
+
+// // get a lesson by slug For example, if a request is made to the URL "/lessons/my-first-lesson", the "my-first-lesson" portion of the URL will be extracted as the value of the "lesson" parameter and passed to the function
+// Route::get('lessons/{lesson:slug}', function ($lesson) {
+//     return $lesson;
+// });
+
+
+// // if not any of the routes requests is fulfilled return this for ex. 404
+// Route::fallback(function () {
+//     //
+// });
