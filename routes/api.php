@@ -1,9 +1,11 @@
 <?php
 
-use App\Models\Lesson;
-use App\Models\Tag;
-use App\Models\User;
+use App\Http\Controllers\API\LessonController;
+use App\Http\Controllers\API\RelationShipController;
+use App\Http\Controllers\API\TagController;
+use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,133 +26,161 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => '/v1'], function () {
 
-    // get all lessons
-    Route::get('lessons', function () {
-        return Lesson::all();
-    });
-
-    // get a specific lesson
-    Route::get('lessons/{id}', function ($id) {
-        return Lesson::find($id);
-    });
-
-    // post a lesson
-    Route::post('lessons', function (Request $request) {
-        return Lesson::create($request->all());
-    });
-
-    // edit a post by id choose 'put', 'patch'
-    Route::match(['put', 'patch'], 'lessons/{id}', function (Request $request, $id) {
-        $lesson = Lesson::findOrFail($id);
-        $lesson->update($request->all());
-
-        return $lesson;
-    });
-
-    // delete a post by id
-    Route::delete('lessons/{id}', function ($id) {
-        Lesson::find($id)->delete();
-
-        return 204; // means that the request was successful and the server has fulfilled the request,
-    });
+    // you can use only and except to choose a specific functions
+    Route::apiResource('lessons', LessonController::class);
+    Route::apiResource('users', UserController::class);
+    Route::apiResource('tags', TagController::class);
 
     // if the user requested the old version
     Route::any('lesson', function () {
-        return "please update to our latest version of the api
-        you should use lessons instead of lesson.";
+        $message =  "please update to our latest version of the API.
+            you should use lessons instead of lesson.";
+
+        return Response::json([
+            'data' => $message,
+            'link' => url('documentation/api')
+        ], 404);
     });
 
-    Route::redirect('lesson', 'lessons'); // the latest route is executed first in laravel the above any will be discarded
+    // Route::redirect('lesson', 'lessons'); // the latest route is executed first in laravel the above any will be discarded
 
-
-
-    // get all users
-    Route::get('users', function () {
-        return User::all();
-    });
-
-    // get a specific user
-    Route::get('users/{id}', function ($id) {
-        return User::find($id);
-    });
-
-    // post a user
-    Route::post('users', function (Request $request) {
-        return User::create($request->all());
-    });
-
-    // edit a user by id choose 'put', 'patch'
-    Route::match(['put', 'patch'], 'users/{id}', function (Request $request, $id) {
-        $user = User::findOrFail($id);
-        $user->update($request->all());
-
-        return $user;
-    });
-
-    // delete a user by id
-    Route::delete('users/{id}', function ($id) {
-        User::find($id)->delete();
-
-        return 204; // means that the request was successful and the server has fulfilled the request,
-    });
+    Route::get('user/{id}/lessons', [RelationShipController::class, 'userLessons']); // return a user lesson by users id
+    Route::get('lesson/{id}/tags', [RelationShipController::class, 'lessonTags']); // get a lesson tags by lesson id
+    Route::get('tag/{id}/lessons', [RelationShipController::class, 'tagLessons']); // get the lessons that has this tag by its id
 
 
 
 
 
-    // get all tags
-    Route::get('tags', function () {
-        return Tag::all();
-    });
+    // // return a user lesson by users id
+    // Route::get('users/{id}/lessons', function ($id) {
+    //     $user = User::find($id)->lessons;
 
-    // get a specific tag
-    Route::get('tags/{id}', function ($id) {
-        return Tag::find($id);
-    });
+    //     return $user;
+    // });
 
-    // post a tag
-    Route::post('tags', function (Request $request) {
-        return Tag::create($request->all());
-    });
+    // // get a lesson tags by lesson id
+    // Route::get('lessons/{id}/tags', function ($id) {
+    //     $lesson = Lesson::find($id)->tags;
 
-    // edit a tag by id choose 'put', 'patch'
-    Route::match(['put', 'patch'], 'tags/{id}', function (Request $request, $id) {
-        $tag = Tag::findOrFail($id);
-        $tag->update($request->all());
+    //     return $lesson;
+    // });
 
-        return $tag;
-    });
+    // // get the lessons that has this tag by its id
+    // Route::get('tags/{id}/lessons', function ($id) {
+    //     $tag = Tag::find($id)->lessons;
 
-    // delete a tag by id
-    Route::delete('tags/{id}', function ($id) {
-        Tag::find($id)->delete();
+    //     return $tag;
+    // });
 
-        return 204; // means that the request was successful and the server has fulfilled the request,
-    });
-
-
-    // return a user lesson by users id
-    Route::get('users/{id}/lessons', function ($id) {
-        $user = User::find($id)->lessons;
-
-        return $user;
-    });
-
-    // get a lesson tags by lesson id
-    Route::get('lessons/{id}/tags', function ($id) {
-        $lesson = Lesson::find($id)->tags;
-
-        return $lesson;
-    });
-
-    // get the lessons that has this tag by its id
-    Route::get('tags/{id}/lessons', function ($id) {
-        $tag = Tag::find($id)->lessons;
-
-        return $tag;
-    });
 });
 
+
+    // // ################# start of lessons #################
+    // // get all lessons
+    // Route::get('lessons', function () {
+    //     return Lesson::all();
+    // });
+
+    // // get a specific lesson
+    // Route::get('lessons/{id}', function ($id) {
+    //     return Lesson::find($id);
+    // });
+
+    // // post a lesson
+    // Route::post('lessons', function (Request $request) {
+    //     return Lesson::create($request->all());
+    // });
+
+    // // edit a post by id choose 'put', 'patch'
+    // Route::match(['put', 'patch'], 'lessons/{id}', function (Request $request, $id) {
+    //     $lesson = Lesson::findOrFail($id);
+    //     $lesson->update($request->all());
+
+    //     return $lesson;
+    // });
+
+    // // delete a post by id
+    // Route::delete('lessons/{id}', function ($id) {
+    //     Lesson::find($id)->delete();
+
+    //     return 204; // means that the request was successful and the server has
+    // });
+
+    // // ################# end of lessons #################
+
+
+    // // ################# user start #################
+    // // get all users
+    // Route::get('users', function () {
+    //     return User::all();
+    // });
+
+    // // get a specific user
+    // Route::get('users/{id}', function ($id) {
+    //     return User::find($id);
+    // });
+
+    // // post a user
+    // Route::post('users', function (Request $request) {
+    //     return User::create($request->all());
+    // });
+
+    // // edit a user by id choose 'put', 'patch'
+    // Route::match(['put', 'patch'], 'users/{id}', function (Request $request, $id) {
+    //     $user = User::findOrFail($id);
+    //     $user->update($request->all());
+
+    //     return $user;
+    // });
+
+    // // delete a user by id
+    // Route::delete('users/{id}', function ($id) {
+    //     User::find($id)->delete();
+
+    //     return 204; // means that the request was successful and the server has
+    // });
+
+    // // ################# end of user #################
+
+
+
+    // // ################# start of tags #################
+    // // get all tags
+    // Route::get('tags', function () {
+    //     return Tag::all();
+    // });
+
+    // // get a specific tag
+    // Route::get('tags/{id}', function ($id) {
+    //     return Tag::find($id);
+    // });
+
+    // // post a tag
+    // Route::post('tags', function (Request $request) {
+    //     return Tag::create($request->all());
+    // });
+
+    // // edit a tag by id choose 'put', 'patch'
+    // Route::match(['put', 'patch'], 'tags/{id}', function (Request $request, $id) {
+    //     $tag = Tag::findOrFail($id);
+    //     $tag->update($request->all());
+
+    //     return $tag;
+    // });
+
+    // // delete a tag by id
+    // Route::delete('tags/{id}', function ($id) {
+    //     Tag::find($id)->delete();
+
+    //     return 204; // means that the request was successful and the server has fulfilled the request
+    // });
+    // // ################# end of tags #################
+
+
+
+
+// the bellow routes are for test
 // // to make a custom uri for the user
 // Route::domain('{account}.myapp.com')->group(function () {
 //     Route::get('user/{id}', function ($account, $id) {
