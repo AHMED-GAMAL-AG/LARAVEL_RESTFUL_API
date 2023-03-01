@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function show($id) // use id instead of User $user
     {
-        return User::find($id);
+        return User::findOrFail($id);
     }
 
     /**
@@ -48,7 +48,7 @@ class UserController extends Controller
      */
     public function destroy($id) // use id instead of User $user
     {
-        User::find($id)->delete();
+        User::findOrFail($id)->delete();
 
         return 204; // means that the request was successful and the server has fulfilled the request
     }

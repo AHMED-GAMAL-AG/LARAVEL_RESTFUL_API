@@ -54,21 +54,21 @@ Route::group(['prefix' => '/v1'], function () {
 
     // // return a user lesson by users id
     // Route::get('users/{id}/lessons', function ($id) {
-    //     $user = User::find($id)->lessons;
+    //     $user = User::findOrFail($id)->lessons;
 
     //     return $user;
     // });
 
     // // get a lesson tags by lesson id
     // Route::get('lessons/{id}/tags', function ($id) {
-    //     $lesson = Lesson::find($id)->tags;
+    //     $lesson = Lesson::findOrFail($id)->tags;
 
     //     return $lesson;
     // });
 
     // // get the lessons that has this tag by its id
     // Route::get('tags/{id}/lessons', function ($id) {
-    //     $tag = Tag::find($id)->lessons;
+    //     $tag = Tag::findOrFail($id)->lessons;
 
     //     return $tag;
     // });
@@ -84,7 +84,7 @@ Route::group(['prefix' => '/v1'], function () {
 
     // // get a specific lesson
     // Route::get('lessons/{id}', function ($id) {
-    //     return Lesson::find($id);
+    //     return Lesson::findOrFail($id);
     // });
 
     // // post a lesson
@@ -102,7 +102,7 @@ Route::group(['prefix' => '/v1'], function () {
 
     // // delete a post by id
     // Route::delete('lessons/{id}', function ($id) {
-    //     Lesson::find($id)->delete();
+    //     Lesson::findOrFail($id)->delete();
 
     //     return 204; // means that the request was successful and the server has
     // });
@@ -118,7 +118,7 @@ Route::group(['prefix' => '/v1'], function () {
 
     // // get a specific user
     // Route::get('users/{id}', function ($id) {
-    //     return User::find($id);
+    //     return User::findOrFail($id);
     // });
 
     // // post a user
@@ -136,7 +136,7 @@ Route::group(['prefix' => '/v1'], function () {
 
     // // delete a user by id
     // Route::delete('users/{id}', function ($id) {
-    //     User::find($id)->delete();
+    //     User::findOrFail($id)->delete();
 
     //     return 204; // means that the request was successful and the server has
     // });
@@ -153,7 +153,7 @@ Route::group(['prefix' => '/v1'], function () {
 
     // // get a specific tag
     // Route::get('tags/{id}', function ($id) {
-    //     return Tag::find($id);
+    //     return Tag::findOrFail($id);
     // });
 
     // // post a tag
@@ -171,7 +171,7 @@ Route::group(['prefix' => '/v1'], function () {
 
     // // delete a tag by id
     // Route::delete('tags/{id}', function ($id) {
-    //     Tag::find($id)->delete();
+    //     Tag::findOrFail($id)->delete();
 
     //     return 204; // means that the request was successful and the server has fulfilled the request
     // });

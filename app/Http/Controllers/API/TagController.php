@@ -29,7 +29,7 @@ class TagController extends Controller
      */
     public function show($id) // use id instead of Tag $tag
     {
-        return Tag::find($id);
+        return Tag::findOrFail($id);
     }
 
     /**
@@ -48,7 +48,7 @@ class TagController extends Controller
      */
     public function destroy($id) // use id instead of Tag $tag
     {
-        Tag::find($id)->delete();
+        Tag::findOrFail($id)->delete();
 
         return 204; // means that the request was successful and the server has fulfilled the request
     }

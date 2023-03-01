@@ -29,7 +29,7 @@ class LessonController extends Controller
      */
     public function show($id) // use the id instead of Lesson $lesson
     {
-        return Lesson::find($id);
+        return Lesson::findOrFail($id);
     }
 
     /**
@@ -48,7 +48,7 @@ class LessonController extends Controller
      */
     public function destroy($id) // use the id instead of Lesson $lesson
     {
-        Lesson::find($id)->delete();
+        Lesson::findOrFail($id)->delete();
 
         return 204; // means that the request was successful and the server has fulfilled the request
     }
