@@ -18,17 +18,37 @@ class RelationShipController extends Controller
 
         $user = User::findOrFail($id)->lessons;
 
+        // filter the response
+        $fields = array();
+        $filtered = array();
+        foreach ($user as $lesson) {
+
+            $fields['Title'] = $lesson->title;
+            $fields['Content'] = $lesson->body;
+            $filtered[] = $fields;
+        }
+
         return Response::json([
-            'data' => $user->toArray()
+            'data' => $filtered
         ], 200);
     }
+
 
     public function lessonTags($id) // get a tags on a lesson by a lesson id
     {
         $lesson = Lesson::findOrFail($id)->tags;
 
+        // filter the response
+        $fields = array();
+        $filtered = array();
+        foreach ($lesson as $tag) {
+
+            $fields['Tag'] = $tag->name;
+            $filtered[] = $fields;
+        }
+
         return Response::json([
-            'data' => $lesson->toArray()
+            'data' => $filtered
         ], 200);
     }
 
@@ -36,8 +56,18 @@ class RelationShipController extends Controller
     {
         $tag = Tag::findOrFail($id)->lessons;
 
+        // filter the response
+        $fields = [];
+        $filtered = [];
+        foreach ($tag as $lesson) {
+
+            $fields['Title'] = $lesson->title;
+            $fields['Content'] = $lesson->body;
+            $filtered[] = $fields;
+        }
+
         return Response::json([
-            'data' => $tag->toArray()
+            'data' => $filtered,
         ], 200);
     }
 }
