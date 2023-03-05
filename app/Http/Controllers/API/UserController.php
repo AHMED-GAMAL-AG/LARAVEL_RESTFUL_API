@@ -6,9 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('auth.once.basic')->except(['index', 'show']); // skip 'index' , 'show' just do auth on delete , store and edit
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -23,7 +31,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new UserResource(User::create($request->all()));
+        $user = new UserResource(User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]));
         return $user->response()->setStatusCode(200);
     }
 

@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 
 class LessonController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth.once.basic')->except(['index', 'show']); // skip 'index' , 'show' just do auth on delete , store and edit
+    }
+
     /**
      * Display a listing of the resource.
      */
