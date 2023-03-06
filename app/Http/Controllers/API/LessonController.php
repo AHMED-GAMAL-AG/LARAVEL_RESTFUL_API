@@ -12,7 +12,8 @@ class LessonController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth.once.basic')->except(['index', 'show']); // skip 'index' , 'show' just do auth on delete , store and edit
+        // auth:api to use access token
+        $this->middleware('auth:api')->except(['index', 'show']); // skip 'index' , 'show' just do auth on delete , store and edit
     }
 
     /**

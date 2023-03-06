@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\LessonController;
+use App\Http\Controllers\API\LoginController;
 use App\Http\Controllers\API\RelationShipController;
 use App\Http\Controllers\API\TagController;
 use App\Http\Controllers\API\UserController;
@@ -47,7 +48,7 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('user/{id}/lessons', [RelationShipController::class, 'userLessons']); // return a user lesson by users id
     Route::get('lesson/{id}/tags', [RelationShipController::class, 'lessonTags']); // get a lesson tags by lesson id
     Route::get('tag/{id}/lessons', [RelationShipController::class, 'tagLessons']); // get the lessons that has this tag by its id
-
+    Route::get('/login', [LoginController::class, 'login'])->name('login'); // give it name login as laravel by default redirect for route('login') if auth failed in middleware/authenticate.php
 
 
 
