@@ -19,9 +19,11 @@ class LessonController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lesson = LessonResource::collection(Lesson::all());
+        $limit = $request->input('limit') <= 50 ? $request->input('limit'): 15; // the user choose the limit by max 50 or by default it is 15
+
+        $lesson = LessonResource::collection(Lesson::paginate($limit));
         return $lesson->response()->setStatusCode(200);
     }
 

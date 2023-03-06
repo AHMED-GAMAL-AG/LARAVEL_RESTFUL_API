@@ -21,9 +21,11 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $user = UserResource::collection(User::all());
+        $limit = $request->input('limit') <= 50 ? $request->input('limit'): 15; // the user choose the limit by max 50 or by default it is 15
+
+        $user = UserResource::collection(User::paginate($limit));
         return $user->response()->setStatusCode(200);
     }
 
@@ -72,7 +74,7 @@ class UserController extends Controller
     {
         $userId = User::findOrFail($id); // the user to be deleted
 
-        $this->authorize('delete' , $userId);
+        $this->authorize('delete', $userId);
         User::findOrFail($id)->delete();
 
         return 204; // means that the request was successful and the server has fulfilled the request
