@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('php artisan passport:purge')->weekly(); // artisan commands , remove expired access tokens
+        // $schedule->exec('npm update')->hourly(); // cmd commands
     }
 
     /**
