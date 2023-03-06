@@ -32,6 +32,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', User::class); // the create method and pass the model so laravel know it is in the UserPolicy
         $user = new UserResource(User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -54,6 +55,10 @@ class UserController extends Controller
      */
     public function update(Request $request, $id) // use id instead of User $user
     {
+
+        $userId = User::findOrFail($id); // the user to be updated
+        $this->authorize('update', $userId);
+
         $user = new UserResource(User::findOrFail($id));
         $user->update($request->all());
 
@@ -65,6 +70,9 @@ class UserController extends Controller
      */
     public function destroy($id) // use id instead of User $user
     {
+        $userId = User::findOrFail($id); // the user to be deleted
+
+        $this->authorize('delete' , $userId);
         User::findOrFail($id)->delete();
 
         return 204; // means that the request was successful and the server has fulfilled the request

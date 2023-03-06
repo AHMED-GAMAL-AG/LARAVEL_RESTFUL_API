@@ -48,6 +48,9 @@ class TagController extends Controller
      */
     public function update(Request $request, $id) // use id instead of Tag $tag
     {
+        $tagId = Tag::findOrFail($id); // tag to be updated
+        $this->authorize('update', $tagId);
+
         $tag = new TagResource(Tag::findOrFail($id));
         $tag->update($request->all());
 
@@ -59,6 +62,9 @@ class TagController extends Controller
      */
     public function destroy($id) // use id instead of Tag $tag
     {
+        $tagId = Tag::findOrFail($id); // tag to be deleted
+        $this->authorize('delete', $tagId);
+
         Tag::findOrFail($id)->delete();
 
         return 204; // means that the request was successful and the server has fulfilled the request

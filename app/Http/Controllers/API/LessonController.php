@@ -49,6 +49,9 @@ class LessonController extends Controller
      */
     public function update(Request $request,  $id) // use the id instead of Lesson $lesson
     {
+        $lessonId = Lesson::findOrFail($id); // lesson to be updated
+        $this->authorize('update', $lessonId);
+
         $lesson = new LessonResource(Lesson::findOrFail($id));
         $lesson->update($request->all());
 
@@ -60,6 +63,9 @@ class LessonController extends Controller
      */
     public function destroy($id) // use the id instead of Lesson $lesson
     {
+        $lessonId = Lesson::findOrFail($id); // lesson to be deleted
+        $this->authorize('delete', $lessonId);
+
         Lesson::findOrFail($id)->delete();
 
         return 204; // means that the request was successful and the server has fulfilled the request
