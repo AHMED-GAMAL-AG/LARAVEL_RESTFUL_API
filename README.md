@@ -13,7 +13,7 @@ You can test the API through postman desktop application:
 - error validation
 - oauth2 authentication using the passport package
 - authorization for data to be accessed by admins only
-- respinse pagination
+- pagination for the data send in the response
 - events and sechdeuling
 - filter the data before sending it in the response
 
