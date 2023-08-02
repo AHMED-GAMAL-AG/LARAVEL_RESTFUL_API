@@ -1,11 +1,11 @@
 ## Laravel Restful API
 A restful API for a Learning Management System (LMS) platform built with the Laravel framework. It provides seamless communication and data exchange between client applications and the server, following RESTful principles.
 
-You can find an installation guide bellow.
+You can find an installation guide below.
 
 ## Screenshots
 
-You can test the API through postman desktop application:
+You can test the API through the Postman desktop application:
 
 ![image](https://github.com/AHMED-GAMAL-AG/LARAVEL_RESTFUL_API/assets/76778937/2575f313-fc58-4772-b1d2-0f6f177a0266)
 
@@ -13,9 +13,10 @@ You can test the API through postman desktop application:
 - error validation
 - oauth2 authentication using the passport package
 - authorization for data to be accessed by admins only
-- pagination for the data send in the response
+- pagination for the data sent in the response
 - events and sechdeuling
 - filter the data before sending it in the response
+- API versioning to future-proof the API.
 
 ## installation
 
